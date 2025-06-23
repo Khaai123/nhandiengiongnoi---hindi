@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8"/>
-    <title>Combined Hindi Q&A Recorder & Text Reader</title>
+    <title>Combined italiano Q&A Recorder & Text Reader</title>
     <style>
         /* --- General Layout --- */
         html, body {
@@ -145,7 +145,7 @@
 
 <div id="main-container">
     <div id="left-panel" class="panel">
-        <h1>Questions and Answers – Voice Recording (Hindi)</h1>
+        <h1>Questions and Answers – Voice Recording (italiano)</h1>
         <h2>📂 Import questions from file:</h2>
         <input accept=".docx,.txt" id="file-input" type="file"/>
         <h2>📥 Import Q&A from ZIP:</h2>
@@ -158,7 +158,7 @@
     </div>
 
     <div id="right-panel" class="panel">
-        <h1>Paste Hindi text here to listen with Swara's voice</h1>
+        <h1>Paste italiano text here to listen with Google italiano's voice</h1>
         <div id="text-area" contenteditable="true">
             Paste text here...
         </div>
@@ -182,7 +182,7 @@
     // =================================================================
     // =========== SHARED & GLOBAL VARIABLES AND FUNCTIONS ===========
     // =================================================================
-    let hindiTTSVoice = null;
+    let italianoTTSVoice = null;
     let recognition;
     let mediaRecorder;
     let audioChunks = [];
@@ -202,11 +202,11 @@
 
     function initializeVoices() {
         const voices = speechSynthesis.getVoices();
-        hindiTTSVoice = voices.find(v => v.name === "Microsoft Swara Online (Natural) - Hindi (India)") || voices.find(v => v.name.includes("Swara") && v.lang === "hi-IN");
-        if (hindiTTSVoice) {
-            console.log("Successfully found Hindi voice:", hindiTTSVoice.name);
+        italianoTTSVoice = voices.find(v => v.name === "Google italiano") || voices.find(v => v.name.includes("Google italiano") && v.lang === "it-IT");
+        if (italianoTTSVoice) {
+            console.log("Successfully found italiano voice:", italianoTTSVoice.name);
         } else {
-            console.warn("Swara voice not found. The browser's default Hindi voice will be used.");
+            console.warn("Google italiano voice not found. The browser's default italiano voice will be used.");
         }
     }
 
@@ -219,7 +219,7 @@
         recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = false;
-        recognition.lang = 'hi-IN';
+        recognition.lang = 'it-IT';
         recognition.onresult = function (event) {
             let transcript = '';
             for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -303,8 +303,8 @@
             return;
         }
         currentUtterance = new SpeechSynthesisUtterance(cleanedText);
-        currentUtterance.lang = 'hi-IN';
-        if (hindiTTSVoice) currentUtterance.voice = hindiTTSVoice;
+        currentUtterance.lang = 'it-IT';
+        if (italianoTTSVoice) currentUtterance.voice = italianoTTSVoice;
         currentUtterance.rate = currentPlaybackRate;
         currentUtterance.onboundary = function(event) {
             if (event.name === 'word') {
